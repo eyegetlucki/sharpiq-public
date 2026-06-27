@@ -135,6 +135,14 @@ An offline evaluation system that scores SharpIQ's AI pipeline using the RAGAS f
 
 A new API endpoint that lets you query SharpIQ's entire database in plain English. Ask things like "which players had the highest fatigue score last week?" or "what's the win rate on soccer props?" — Claude generates the SQL, executes it safely (SELECT-only, 100-row cap, read-only session), and returns both the raw results and a plain English explanation of the findings. Requires authentication. No extra infrastructure — runs over the existing Supabase connection.
 
+## Features
+
+### Natural Language Query (Pro)
+Ask plain English questions about the entire database. Claude generates
+safe read-only SQL, results render as a formatted data table with
+auto-generated headers, boolean chips, and null handling. Includes
+collapsible SQL inspector showing the exact query generated.
+
 ## Developer
 
 **Laitrell Uy-Xayachak** — AI systems developer and solo product builder
