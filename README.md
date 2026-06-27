@@ -123,6 +123,18 @@ The nightly ETL pipeline and multi-agent inference require consistent compute ra
 
 ---
 
+1. Terraform Infrastructure as Code
+
+All AWS infrastructure (ECS Fargate, ECR, ALB, ACM, IAM, CloudWatch, Security Groups) is now version-controlled in infrastructure/. Anyone can see exactly what's deployed, reproduce it, or audit changes via terraform plan. State is stored in S3 with locking. No resources were recreated — everything was imported from the existing live setup.
+
+2. RAGAS Eval Harness
+
+An offline evaluation system that scores SharpIQ's AI pipeline using the RAGAS framework. It reads settled predictions from the database, retrieves the same context the AI used, and scores each prediction across three metrics: faithfulness (did the reasoning match the data?), answer relevance (did the verdict address the prop?), and context precision (was the retrieved data useful?). Runs as a local CLI — completely separate from production. Lays the groundwork for fine-tuning the Critic agent once enough data is collected.
+
+3. Natural Language SQL Agent — POST /query/natural
+
+A new API endpoint that lets you query SharpIQ's entire database in plain English. Ask things like "which players had the highest fatigue score last week?" or "what's the win rate on soccer props?" — Claude generates the SQL, executes it safely (SELECT-only, 100-row cap, read-only session), and returns both the raw results and a plain English explanation of the findings. Requires authentication. No extra infrastructure — runs over the existing Supabase connection.
+
 ## Developer
 
 **Laitrell Uy-Xayachak** — AI systems developer and solo product builder
